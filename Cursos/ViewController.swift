@@ -28,6 +28,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         obtenerCursos()
         tableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let curso = cursos[indexPath.row]
+        
+        if editingStyle == .delete {
+            print("Delete")
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            context.delete(curso)
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            //navigationController!.popViewController(animated: true)
+            
+            obtenerCursos()
+            tableView.reloadData()
+            
+        }
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cursos.count
